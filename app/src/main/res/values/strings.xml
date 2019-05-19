@@ -2,7 +2,6 @@
     <string name="app_name">Sample App</string>
     <string name="signIn">Sign in</string>
     <string name="createAccount">Create Account</string>
-    <string name="but3">Page 3</string>
     <string name="signInPass">Password</string>
     <string name="signInEmail">Email</string>
 </resources>
