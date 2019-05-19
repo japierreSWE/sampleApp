@@ -45,7 +45,7 @@
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@id/pass"
-        android:onClick="toPage1"
+        android:onClick="signIn"
         />
 
     <Button
@@ -57,7 +57,7 @@
         app:layout_constraintLeft_toLeftOf="@id/signIn"
         app:layout_constraintRight_toRightOf="@id/signIn"
         app:layout_constraintTop_toBottomOf="@id/signIn"
-        android:onClick="toPage2"
+        android:onClick="goToCreate"
         />
 
 
