@@ -32,16 +32,46 @@
         app:layout_constraintRight_toRightOf="@id/create_email"
         />
 
-    <EditText
-        android:id="@+id/create_dob"
-        android:layout_width="0dp"
+    <TextView
+        android:id="@+id/dobText"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:text="@string/dobText"
         android:layout_marginTop="16dp"
-        android:hint="@string/create_dob"
-        android:inputType="date"
         app:layout_constraintTop_toBottomOf="@id/create_name"
         app:layout_constraintLeft_toLeftOf="@id/create_name"
-        app:layout_constraintRight_toRightOf="@id/create_name"
+        />
+
+    <EditText
+        android:id="@+id/create_dobMonth"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/create_dobMonth"
+        android:inputType="text"
+        android:layout_marginLeft="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintTop_toBottomOf="@id/create_name"
+        app:layout_constraintLeft_toRightOf="@id/dobText"
+        />
+
+    <EditText
+        android:id="@+id/create_dobDay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/create_dobDay"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@id/create_name"
+        app:layout_constraintLeft_toRightOf="@id/create_dobMonth"
+        />
+
+    <EditText
+        android:id="@+id/create_dobYear"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/create_dobYear"
+        android:inputType="text"
+        app:layout_constraintTop_toBottomOf="@id/create_name"
+        app:layout_constraintLeft_toRightOf="@id/create_dobDay"
         />
 
     <EditText
@@ -51,9 +81,9 @@
         android:layout_marginTop="16dp"
         android:hint="@string/signInPass"
         android:inputType="textPassword"
-        app:layout_constraintTop_toBottomOf="@id/create_dob"
-        app:layout_constraintLeft_toLeftOf="@id/create_dob"
-        app:layout_constraintRight_toRightOf="@id/create_dob"
+        app:layout_constraintTop_toBottomOf="@id/create_dobMonth"
+        app:layout_constraintLeft_toLeftOf="@id/create_name"
+        app:layout_constraintRight_toRightOf="@id/create_name"
         />
 
     <EditText

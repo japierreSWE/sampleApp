@@ -5,6 +5,9 @@
     <string name="signInPass">Password</string>
     <string name="signInEmail">Email</string>
     <string name="create_name">Name</string>
-    <string name="create_dob">Date of Birth</string>
+    <string name="dobText">Date of Birth:</string>
+    <string name="create_dobMonth">MM</string>
+    <string name="create_dobDay">DD</string>
+    <string name="create_dobYear">YYYY</string>
     <string name="create_confirmPass">Confirm Password</string>
 </resources>
