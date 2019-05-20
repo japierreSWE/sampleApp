@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 
 public class DoctorsActivity extends AppCompatActivity {
 
@@ -17,5 +18,10 @@ public class DoctorsActivity extends AppCompatActivity {
         String email = intent.getStringExtra(MainActivity.EXTRA_EMAIL);
 
         Log.d("DoctorsActivity", email);
+    }
+
+    /** Goes to the Create Doctor activity */
+    public void toCreateDoctor(View view) {
+
     }
 }
