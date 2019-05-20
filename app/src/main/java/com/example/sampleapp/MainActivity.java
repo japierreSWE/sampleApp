@@ -11,22 +11,30 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class MainActivity extends AppCompatActivity {
 
     private FirebaseAuth mAuth;
-    private String email;
+    private FirebaseFirestore db;
+    private String email; //the email of the user signing in
+    private User user; //the user that's signed in
+    public static final String EXTRA_EMAIL = "com.example.sampleapp.EMAIL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        //init firebase auth.
+        //init firebase auth and database.
         mAuth = FirebaseAuth.getInstance();
+        db = FirebaseFirestore.getInstance();
     }
 
     /** Authenticates a email/pass */
@@ -38,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
 
                         if(task.isSuccessful()) {
-                            goToDoctors();
+                            onSignIn();
 
                         } else {
                             //log the exception and make a toast if we couldn't authenticate.
@@ -69,10 +77,35 @@ public class MainActivity extends AppCompatActivity {
         auth(emailInput, passwordInput);
     }
 
+    /** Retrieves db info upon sign-in. */
+    private void onSignIn() {
+
+        //get the signed in user's info from the db and
+        //turn it into a user object.
+        db.collection("users").document(email).get()
+                .addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+                    @Override
+                    public void onSuccess(DocumentSnapshot documentSnapshot) {
+                        user = documentSnapshot.toObject(User.class);
+                        goToDoctors();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("MainActivity", "Couldn't get user's data", e);
+                        Toast.makeText(getApplicationContext(), "Data retrieval failed.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+    }
+
     /** Goes to the Doctors activity */
-    public void goToDoctors() {
+    private void goToDoctors() {
 
         Intent intent = new Intent(this, DoctorsActivity.class);
+        intent.putExtra(EXTRA_EMAIL, email);
         startActivity(intent);
 
     }
