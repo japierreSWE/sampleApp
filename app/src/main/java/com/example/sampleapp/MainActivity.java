@@ -79,7 +79,8 @@ public class MainActivity extends AppCompatActivity {
 
     /** Goes to the Create Account activity */
     public void goToCreate(View view) {
-
+        Intent intent = new Intent(this, CreateAccountActivity.class);
+        startActivity(intent);
     }
 
 }
