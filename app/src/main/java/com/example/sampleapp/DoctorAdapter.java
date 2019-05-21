@@ -23,9 +23,9 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DocViewHol
     public static class DocViewHolder extends RecyclerView.ViewHolder {
 
         public TextView tv;
-        public DocViewHolder(TextView text) {
-            super(text);
-            tv = text;
+        public DocViewHolder(View view) {
+            super(view);
+            tv = view.findViewById(R.id.doctorName);
         }
 
     }
@@ -34,8 +34,8 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DocViewHol
     public DoctorAdapter.DocViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.doctor_row, parent, false);
-        TextView text = view.findViewById(R.id.doctorName);
-        return new DocViewHolder(text);
+        //TextView text = view.findViewById(R.id.doctorName);
+        return new DocViewHolder(view);
 
     }
 
