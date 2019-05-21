@@ -10,4 +10,8 @@
     <string name="create_dobDay">DD</string>
     <string name="create_dobYear">YYYY</string>
     <string name="create_confirmPass">Confirm Password</string>
+    <string name="create_doctorName">Name of Doctor</string>
+    <string name="create_doctorNumber">Doctor\'s Phone Number</string>
+    <string name="create_doctorEmail">Doctor\'s Email</string>
+    <string name="create_doctorAddress">Doctor\'s Address:</string>
 </resources>

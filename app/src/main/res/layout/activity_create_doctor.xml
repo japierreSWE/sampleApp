@@ -6,4 +6,63 @@
     android:layout_height="match_parent"
     tools:context=".CreateDoctorActivity">
 
+    <EditText
+        android:id="@+id/create_doctorName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/create_doctorName"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginRight="32dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <EditText
+        android:id="@+id/create_doctorNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/create_doctorNumber"
+        android:inputType="phone"
+        app:layout_constraintLeft_toLeftOf="@id/create_doctorName"
+        app:layout_constraintRight_toRightOf="@id/create_doctorName"
+        app:layout_constraintTop_toBottomOf="@id/create_doctorName"
+        />
+
+    <EditText
+        android:id="@+id/create_doctorEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/create_doctorEmail"
+        android:inputType="textEmailAddress"
+        app:layout_constraintLeft_toLeftOf="@id/create_doctorNumber"
+        app:layout_constraintRight_toRightOf="@id/create_doctorNumber"
+        app:layout_constraintTop_toBottomOf="@id/create_doctorNumber"
+        />
+
+    <TextView
+        android:id="@+id/doctorAddressLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="16dp"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="16dp"
+        android:textSize="16sp"
+        app:layout_constraintLeft_toLeftOf="@id/create_doctorEmail"
+        app:layout_constraintRight_toRightOf="@id/create_doctorEmail"
+        app:layout_constraintTop_toBottomOf="@id/create_doctorEmail"
+        android:text="@string/create_doctorAddress"
+        />
+
+    <fragment
+        android:id="@+id/autocomplete_fragment"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@id/create_doctorEmail"
+        app:layout_constraintRight_toRightOf="@id/create_doctorEmail"
+        app:layout_constraintTop_toBottomOf="@id/doctorAddressLabel"
+        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

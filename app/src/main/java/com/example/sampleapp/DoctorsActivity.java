@@ -31,7 +31,7 @@ public class DoctorsActivity extends AppCompatActivity {
 
     String email;
 
-    String EXTRA_EMAIL = "com.example.sampleapp.EMAIL";
+    public static final String EXTRA_EMAIL = "com.example.sampleapp.EMAIL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
