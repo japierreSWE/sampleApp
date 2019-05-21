@@ -39,6 +39,7 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DocViewHol
 
     }
 
+    /** Find the corresponding doctor and display its name in the view */
     public void onBindViewHolder(DocViewHolder holder, int position) {
 
         QueryDocumentSnapshot doc = doctorsList.get(position);

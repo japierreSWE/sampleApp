@@ -17,7 +17,6 @@ import java.util.Arrays;
 public class CreateDoctorActivity extends AppCompatActivity {
 
     String email;
-    String selectedPlaceAddress;
     String selectedPlaceId;
 
     @Override
@@ -29,14 +28,16 @@ public class CreateDoctorActivity extends AppCompatActivity {
         Places.initialize(getApplicationContext(), "AIzaSyDfU9D8p_AoXAQzATv_u90fX97LPtls55k");
         AutocompleteSupportFragment searchBar = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.autocomplete_fragment);
 
+        //we want these fields from the place.
         searchBar.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS));
 
+        //if we got the place, store its ID.
         searchBar.setOnPlaceSelectedListener(new PlaceSelectionListener() {
             @Override
             public void onPlaceSelected(@NonNull Place place) {
-                selectedPlaceAddress = place.getAddress();
+
                 selectedPlaceId = place.getId();
-                Log.d("CreateDoctorActivity", selectedPlaceAddress + " " + selectedPlaceId);
+                Log.d("CreateDoctorActivity",  selectedPlaceId);
             }
 
             @Override
