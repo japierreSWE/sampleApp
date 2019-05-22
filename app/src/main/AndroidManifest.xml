@@ -9,10 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreateDoctorActivity"></activity>
+        <activity android:name=".ViewDoctorActivity"></activity>
+        <activity android:name=".CreateDoctorActivity" />
         <activity
             android:name=".CreateAccountActivity"
-            android:parentActivityName=".MainActivity"></activity>
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".DoctorsActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

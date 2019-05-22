@@ -65,18 +65,15 @@ public class DoctorsActivity extends AppCompatActivity {
         recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerClickListener() {
             @Override
             public void onClick(View view, int position) {
-                TextView ele = view.findViewById(R.id.doctorName);
-                String text = ele.getText().toString();
-                Toast.makeText(getApplicationContext(), text,
-                        Toast.LENGTH_SHORT).show();
+                //get the corresponding doctor. use their email to send to show doctor acitivty.
+                QueryDocumentSnapshot doctorDocument = doctorsList.get(position);
+                Doctor doctor = doctorDocument.toObject(Doctor.class);
+                toViewDoctor(doctor.email);
             }
 
             @Override
             public void onLongClick(View view, int position) {
-                TextView ele = view.findViewById(R.id.doctorName);
-                String text = ele.getText().toString();
-                Toast.makeText(getApplicationContext(), text,
-                        Toast.LENGTH_SHORT).show();
+
             }
         }));
 
@@ -110,7 +107,12 @@ public class DoctorsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    public static void toViewDoctor(int position) {
+    public void toViewDoctor(String doctorEmail) {
+
+        Intent intent = new Intent(this, ViewDoctorActivity.class);
+        intent.putExtra(EXTRA_EMAIL, email);
+        intent.putExtra(EXTRA_DOCTOR_EMAIL, doctorEmail);
+        startActivity(intent);
 
     }
 
