@@ -6,4 +6,60 @@
     android:layout_height="match_parent"
     tools:context=".ViewDoctorActivity">
 
+    <TextView
+        android:id="@+id/output_doctorName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/doctorNumberLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="@string/doctorNumberLabel"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toLeftOf="@id/output_doctorName"
+        app:layout_constraintTop_toBottomOf="@id/output_doctorName"
+        />
+
+    <TextView
+        android:id="@+id/output_doctorNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toRightOf="@id/doctorNumberLabel"
+        app:layout_constraintTop_toBottomOf="@id/output_doctorName"
+        />
+
+    <TextView
+        android:id="@+id/doctorEmailLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="@string/doctorEmailLabel"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toLeftOf="@id/doctorNumberLabel"
+        app:layout_constraintTop_toBottomOf="@id/doctorNumberLabel"
+        />
+
+    <TextView
+        android:id="@+id/output_doctorEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        app:layout_constraintLeft_toRightOf="@id/doctorEmailLabel"
+        app:layout_constraintTop_toBottomOf="@id/doctorNumberLabel"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

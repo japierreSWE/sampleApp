@@ -15,4 +15,6 @@
     <string name="create_doctorEmail">Doctor\'s Email</string>
     <string name="create_doctorAddress">Doctor\'s Address:</string>
     <string name="createDoctorButton">Add Doctor</string>
+    <string name="doctorNumberLabel">Phone Number:</string>
+    <string name="doctorEmailLabel">Email:</string>
 </resources>
