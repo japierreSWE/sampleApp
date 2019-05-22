@@ -34,9 +34,9 @@ public class DoctorAdapter extends RecyclerView.Adapter<DoctorAdapter.DocViewHol
     public DoctorAdapter.DocViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.doctor_row, parent, false);
-        //TextView text = view.findViewById(R.id.doctorName);
-        return new DocViewHolder(view);
+        TextView text = view.findViewById(R.id.doctorName);
 
+        return new DocViewHolder(view);
     }
 
     /** Find the corresponding doctor and display its name in the view */

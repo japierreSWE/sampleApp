@@ -2,13 +2,17 @@ package com.example.sampleapp;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.DividerItemDecoration;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -32,6 +36,7 @@ public class DoctorsActivity extends AppCompatActivity {
     String email;
 
     public static final String EXTRA_EMAIL = "com.example.sampleapp.EMAIL";
+    public static final String EXTRA_DOCTOR_EMAIL = "com.example.sampleapp.DOCTOR_EMAIL";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +52,34 @@ public class DoctorsActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         CollectionReference doctors = db.collection("users").document(email).collection("doctors");
 
+        //config recycler view and its layout
+        recyclerView = findViewById(R.id.recyclerView);
+        adapter = new DoctorAdapter(doctorsList);
+        recyclerView.setAdapter(adapter);
+        //config layout
+        layoutManager = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(layoutManager);
+
+        recyclerView.addItemDecoration(new DividerItemDecoration(this, LinearLayoutManager.VERTICAL));
+
+        recyclerView.addOnItemTouchListener(new RecyclerTouchListener(getApplicationContext(), recyclerView, new RecyclerClickListener() {
+            @Override
+            public void onClick(View view, int position) {
+                TextView ele = view.findViewById(R.id.doctorName);
+                String text = ele.getText().toString();
+                Toast.makeText(getApplicationContext(), text,
+                        Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onLongClick(View view, int position) {
+                TextView ele = view.findViewById(R.id.doctorName);
+                String text = ele.getText().toString();
+                Toast.makeText(getApplicationContext(), text,
+                        Toast.LENGTH_SHORT).show();
+            }
+        }));
+
         //retrieve the doctors for this user.
         doctors.get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -59,7 +92,7 @@ public class DoctorsActivity extends AppCompatActivity {
                                 doctorsList.add(doc);
                             }
 
-                            configRecyclerView();
+                            adapter.notifyDataSetChanged();
 
                         } else {
                             Log.w("DoctorsActivity", "Error getting doctors", task.getException());
@@ -70,24 +103,15 @@ public class DoctorsActivity extends AppCompatActivity {
 
     }
 
-    /** Initializes the recycler view */
-    private void configRecyclerView() {
-
-        recyclerView = findViewById(R.id.recyclerView);
-
-        //config layout and adapter.
-        layoutManager = new LinearLayoutManager(this);
-        recyclerView.setLayoutManager(layoutManager);
-
-        adapter = new DoctorAdapter(doctorsList);
-        recyclerView.setAdapter(adapter);
-
-    }
-
     /** Goes to the Create Doctor activity */
     public void toCreateDoctor(View view) {
         Intent intent = new Intent(this, CreateDoctorActivity.class);
         intent.putExtra(EXTRA_EMAIL, email);
         startActivity(intent);
     }
+
+    public static void toViewDoctor(int position) {
+
+    }
+
 }
