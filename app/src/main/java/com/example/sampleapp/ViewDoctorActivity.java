@@ -59,6 +59,7 @@ public class ViewDoctorActivity extends AppCompatActivity implements OnMapReadyC
     Place doctorLocation; //the Place of the doctor's address
     Place userLocation; //the Place of the user's address
     List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.ADDRESS, Place.Field.LAT_LNG); //fields needed from the places
+    List<LatLng> path = new ArrayList<LatLng>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -211,64 +212,72 @@ public class ViewDoctorActivity extends AppCompatActivity implements OnMapReadyC
 
     public void onMapReady(GoogleMap googleMap) {
         map = googleMap;
+        new RouteFinder().execute(0,0,0);
 
-        List<LatLng> path = new ArrayList<LatLng>();
+    }
 
-        //start by setting up the directions API request
-        GeoApiContext context = new GeoApiContext.Builder().apiKey("AIzaSyDfU9D8p_AoXAQzATv_u90fX97LPtls55k").build();
-        String userCoords = String.valueOf(userLocation.getLatLng().latitude) + "," +  String.valueOf(userLocation.getLatLng().longitude);
-        String doctorCoords = String.valueOf(doctorLocation.getLatLng().latitude) + "," +  String.valueOf(doctorLocation.getLatLng().longitude);
-        DirectionsApiRequest req = DirectionsApi.getDirections(context, userCoords, doctorCoords);
+    private class RouteFinder extends AsyncTask<Integer,Integer,Integer> {
 
-        //loop through legs and steps to get encoded polylines of each step
-        try {
+        @Override
+        protected Integer doInBackground(Integer ... ints) {
 
-            DirectionsResult result = req.await();
+            //start by setting up the directions API request
+            GeoApiContext context = new GeoApiContext.Builder().apiKey("AIzaSyDfU9D8p_AoXAQzATv_u90fX97LPtls55k").build();
+            String userCoords = String.valueOf(userLocation.getLatLng().latitude) + "," +  String.valueOf(userLocation.getLatLng().longitude);
+            String doctorCoords = String.valueOf(doctorLocation.getLatLng().latitude) + "," +  String.valueOf(doctorLocation.getLatLng().longitude);
+            DirectionsApiRequest req = DirectionsApi.getDirections(context, userCoords, doctorCoords);
 
-            //if there are routes, use the first one.
-            if(result.routes != null && result.routes.length > 0) {
-                DirectionsRoute route = result.routes[0];
+            //loop through legs and steps to get encoded polylines of each step
+            try {
 
-                //if there are legs, do the following:
-                if(route.legs != null) {
-                    for(int i = 0; i<route.legs.length; i++) {
-                        DirectionsLeg leg = route.legs[i];
+                DirectionsResult result = req.await();
 
-                        //if there are steps, do the following:
-                        if(leg.steps != null) {
+                //if there are routes, use the first one.
+                if(result.routes != null && result.routes.length > 0) {
+                    DirectionsRoute route = result.routes[0];
 
-                            for(int j = 0; j<leg.steps.length; j++) {
+                    //if there are legs, do the following:
+                    if(route.legs != null) {
+                        for(int i = 0; i<route.legs.length; i++) {
+                            DirectionsLeg leg = route.legs[i];
 
-                                DirectionsStep step = leg.steps[j];
-                                //get the details within each step.
-                                if(step.steps != null && step.steps.length > 0) {
+                            //if there are steps, do the following:
+                            if(leg.steps != null) {
 
-                                    for(int k = 0; k<step.steps.length; k++) {
-                                        DirectionsStep step1 = step.steps[k];
-                                        EncodedPolyline points1 = step1.polyline;
+                                for(int j = 0; j<leg.steps.length; j++) {
 
-                                        if(points1 != null) {
-                                            //decode polyline and add points to list
-                                            List<com.google.maps.model.LatLng> coords1 = points1.decodePath();
-                                            for(com.google.maps.model.LatLng coord1 : coords1) {
-                                                path.add(new LatLng(coord1.lat,coord1.lng));
+                                    DirectionsStep step = leg.steps[j];
+                                    //get the details within each step.
+                                    if(step.steps != null && step.steps.length > 0) {
+
+                                        for(int k = 0; k<step.steps.length; k++) {
+                                            DirectionsStep step1 = step.steps[k];
+                                            EncodedPolyline points1 = step1.polyline;
+
+                                            if(points1 != null) {
+                                                //decode polyline and add points to list
+                                                List<com.google.maps.model.LatLng> coords1 = points1.decodePath();
+                                                for(com.google.maps.model.LatLng coord1 : coords1) {
+                                                    path.add(new LatLng(coord1.lat,coord1.lng));
+                                                }
+
                                             }
 
                                         }
 
-                                    }
-
-                                } else {
-                                    //if we can't get the step details, proceed
-                                    //with  adding the points to the list
-                                    EncodedPolyline points = step.polyline;
-                                    if(points != null) {
-                                        //decode polyline and add points to list
-                                        List<com.google.maps.model.LatLng> coords = points.decodePath();
-                                        for (com.google.maps.model.LatLng coord : coords) {
-                                            path.add(new LatLng(coord.lat, coord.lng));
+                                    } else {
+                                        //if we can't get the step details, proceed
+                                        //with  adding the points to the list
+                                        EncodedPolyline points = step.polyline;
+                                        if(points != null) {
+                                            //decode polyline and add points to list
+                                            List<com.google.maps.model.LatLng> coords = points.decodePath();
+                                            for (com.google.maps.model.LatLng coord : coords) {
+                                                path.add(new LatLng(coord.lat, coord.lng));
+                                            }
                                         }
                                     }
+
                                 }
 
                             }
@@ -279,22 +288,23 @@ public class ViewDoctorActivity extends AppCompatActivity implements OnMapReadyC
 
                 }
 
+            } catch(Exception e) {
+                Log.e("ViewDoctorActivity", e.toString(), e);
+            }
+            return new Integer(1);
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            //the following code displays the line.
+            if(path.size() > 0) {
+                PolylineOptions opts = new PolylineOptions().addAll(path).color(Color.BLUE).width(5);
+                map.addPolyline(opts);
             }
 
-        } catch(Exception e) {
-            Log.e("ViewDoctorActivity", e.toString(), e);
+            map.getUiSettings().setZoomControlsEnabled(true);
+            map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation.getLatLng(), 6));
         }
-
-        //the following code displays the line.
-        if(path.size() > 0) {
-            PolylineOptions opts = new PolylineOptions().addAll(path).color(Color.BLUE).width(5);
-            map.addPolyline(opts);
-        }
-
-        map.getUiSettings().setZoomControlsEnabled(true);
-        map.moveCamera(CameraUpdateFactory.newLatLngZoom(userLocation.getLatLng(), 6));
-
     }
-
 
 }
