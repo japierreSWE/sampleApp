@@ -12,6 +12,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.libraries.places.api.Places;
@@ -28,18 +32,19 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.Arrays;
 import java.util.List;
 
-public class ViewDoctorActivity extends AppCompatActivity {
+public class ViewDoctorActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     String email;
     String doctorEmail;
     FirebaseFirestore db;
     Doctor currentDoctor;
     PlacesClient pc;
+    private GoogleMap map;
 
     int requestCode = 15;
     Place doctorLocation; //the Place of the doctor's address
     Place userLocation; //the Place of the user's address
-    List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.ADDRESS); //fields needed from the places
+    List<Place.Field> fields = Arrays.asList(Place.Field.ID, Place.Field.ADDRESS, Place.Field.LAT_LNG); //fields needed from the places
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +119,7 @@ public class ViewDoctorActivity extends AppCompatActivity {
 
                                 FindCurrentPlaceResponse response = task.getResult();
                                 userLocation = getMaximumLikelihoodPlace(response.getPlaceLikelihoods());
-                                initMapWidget();
+                                initMap();
 
                             } else {
                                 Log.w("ViewDoctorActivity", "Couldn't get user location", task.getException());
@@ -182,9 +187,17 @@ public class ViewDoctorActivity extends AppCompatActivity {
     }
 
     /** Sets up Google Maps functionality */
-    private void initMapWidget() {
+    private void initMap() {
         Log.d("ViewDoctorActivity", userLocation.getAddress());
         Log.d("ViewDoctorActivity", doctorLocation.getAddress());
+
+        SupportMapFragment mapFragment = (SupportMapFragment)getSupportFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
     }
+
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+    }
+
 
 }
