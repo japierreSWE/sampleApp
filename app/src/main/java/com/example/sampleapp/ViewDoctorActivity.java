@@ -216,6 +216,9 @@ public class ViewDoctorActivity extends AppCompatActivity implements OnMapReadyC
 
     }
 
+    //the following class contains the code for displaying the route in the google map
+    //the code is in an AsyncTask because the await call causes an exception when run on
+    //the main thread. The integers are placeholder values
     private class RouteFinder extends AsyncTask<Integer,Integer,Integer> {
 
         @Override
