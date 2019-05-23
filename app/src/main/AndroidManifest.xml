@@ -3,6 +3,7 @@
     package="com.example.sampleapp">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,6 +12,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+
+        <meta-data
+            android:name="com.google.android.geo.AIzaSyDfU9D8p_AoXAQzATv_u90fX97LPtls55k"
+            android:value="AIzaSyDfU9D8p_AoXAQzATv_u90fX97LPtls55k"/>
+
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
         <activity android:name=".ViewDoctorActivity"></activity>
         <activity android:name=".CreateDoctorActivity" />
         <activity
