@@ -17,4 +17,5 @@
     <string name="createDoctorButton">Add Doctor</string>
     <string name="doctorNumberLabel">Phone Number:</string>
     <string name="doctorEmailLabel">Email:</string>
+    <string name="routeLabel">Directions to this doctor:</string>
 </resources>
