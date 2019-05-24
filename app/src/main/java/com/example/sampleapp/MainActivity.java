@@ -74,6 +74,14 @@ public class MainActivity extends AppCompatActivity {
 
         //attempt to authenticate with the input. if we did, go to doctors list page
         email = emailInput;
+
+        //verify that there is input.
+        if(email.equals("") || passwordInput.equals("")) {
+            Toast.makeText(getApplicationContext(), "Please input your username and password.", Toast.LENGTH_SHORT)
+            .show();
+            return;
+        }
+
         auth(emailInput, passwordInput);
     }
 
